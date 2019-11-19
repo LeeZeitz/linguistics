@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Experiment</title>
+        <script src="node_modules/jspsych/jspsych.js"></script>
+        <script src="node_modules/jspsych/plugins/jspsych-audio-slider-response.js"></script>
+        <link href="node_modules/jspsych/css/jspsych.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1></h1>
+        <button onclick="startExperiment()">Start Experiment</button>
+    </body>
+    <script>
+        function startExperiment() {
+            var audio_trial_1 = {
+                type: 'audio-slider-response',
+                stimulus: 'http://localhost:8080/media/audio/audio1.mp3',
+                labels: ['Poorly', 'Well'],
+                prompt: '<p>How well was this spoken?</p>'
+            }
+
+            jsPsych.init({
+                timeline: [audio_trial_1]
+            })
+        }
+
+    </script>
+</html>
