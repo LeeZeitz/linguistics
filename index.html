@@ -14,11 +14,11 @@
         function startExperiment() {
             var audio_trial_1 = {
                 type: 'audio-slider-response',
-                stimulus: 'http://localhost:8080/media/audio/audio1.mp3',
+                stimulus: '/media/audio/audio1.mp3',
                 labels: ['Poorly', 'Well'],
                 prompt: '<p>How well was this spoken?</p>'
             }
-
+		
             jsPsych.init({
                 timeline: [audio_trial_1]
             })
