@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>My Experiment</title>
+        <link rel="shortcut icon" href="https://blogonlinguistics.files.wordpress.com/2016/03/major_levels_of_linguistic_structure-ip3.png" />
         <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/jspsych.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/plugins/jspsych-audio-slider-response.js"></script>
         <link href="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -41,6 +42,7 @@
             var min = -3;
             var max = 3;
 
+            // Define the different trials and their variables
             var trialVars = {
                 1: {
                     'prompt': 'How friendly is the speaker?',
@@ -92,13 +94,14 @@
                 },
             }
 
+            // Generate a random order for the trials
             var order = [];
             for (var i = 1; i < Object.keys(trialVars).length + 1; i++) {
                 order.push(i);
             };
-
             random_order = shuffle(order);
 
+            // Add the trials in their random order to the jsPsych timeline
             var timeline = [];
             random_order.forEach((trialNum) => {
                 var trial = trialVars[trialNum];
@@ -110,13 +113,7 @@
                 });
             });
              
-            var audio_trial_1 = {
-                type: 'audio-slider-response',
-                stimulus: mediaUrl.concat('audio1.mp3'),
-                labels: ['Poorly', 'Well'],
-                prompt: '<p>How well was this spoken?</p>'
-            }
-		
+            // Initialize jsPsych
             jsPsych.init({
                 timeline: timeline
             })
