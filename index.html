@@ -11,8 +11,97 @@
         <button onclick="startExperiment()">Start Experiment</button>
     </body>
     <script>
+
+        /**
+        * Randomly shuffle an array
+        * https://stackoverflow.com/a/2450976/1293256
+        */
+        function shuffle(array) {
+
+            var currentIndex = array.length;
+            var temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        };
+
         function startExperiment() {
             var mediaUrl = 'https://raw.githubusercontent.com/LeeZeitz/linguistics/master/media/audio/';
+            var min = -3;
+            var max = 3;
+
+            var trialVars = {
+                1: {
+                    'prompt': 'How friendly is the speaker?',
+                    'min': 'less friendly',
+                    'max': 'friendly'
+                },
+                2: {
+                    'prompt': 'How sympathetic is the speaker?',
+                    'min': 'less sympathetic',
+                    'max': 'sympathetic'
+                },
+                3: {
+                    'prompt': 'How likeable is the speaker?',
+                    'min': 'less likeable',
+                    'max': 'likeable'
+                },
+                4: {
+                    'prompt': 'How trustworthy is the speaker?',
+                    'min': 'less trustworthy',
+                    'max': 'trustworthy'
+                },
+                5: {
+                    'prompt': 'How ambitious is the speaker?',
+                    'min': 'less ambitious',
+                    'max': 'ambitious'
+                },
+                6: {
+                    'prompt': 'How intelligent is the speaker?',
+                    'min': 'less intelligent',
+                    'max': 'intelligent'
+                },
+                7: {
+                    'prompt': 'How educated is the speaker?',
+                    'min': 'less educated',
+                    'max': 'educated'
+                },
+                8: {
+                    'prompt': 'How authoritative is the speaker?',
+                    'min': 'less authoritative',
+                    'max': 'authoritative'
+                },
+            }
+
+            var order = [];
+            for (var i = 1; i < Object.keys(trialVars).length + 1; i++) {
+                order.push(i);
+            };
+
+            random_order = shuffle(order);
+
+            var timeline = [];
+            random_order.forEach((trialNum) => {
+                var trial = trialVars[trialNum];
+                timeline.push({
+                    type: 'audio-slider-response',
+                    stimulus: mediaUrl.concat(trial.audio),
+                    labels: [trial.min, trial.max],
+                    prompt: trial.prompt
+                });
+            });
+             
             var audio_trial_1 = {
                 type: 'audio-slider-response',
                 stimulus: mediaUrl.concat('audio1.mp3'),
@@ -21,7 +110,7 @@
             }
 		
             jsPsych.init({
-                timeline: [audio_trial_1]
+                timeline: timeline
             })
         }
 
