@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "jspsych": "^6.0.0",
+    "react-pdf": "^4.1.0"
+  }
+}

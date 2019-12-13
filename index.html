@@ -5,6 +5,7 @@
         <link rel="shortcut icon" href="https://blogonlinguistics.files.wordpress.com/2016/03/major_levels_of_linguistic_structure-ip3.png" />
         <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/jspsych.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/plugins/jspsych-audio-slider-response.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
         <link href="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.1.0/css/jspsych.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -42,6 +43,25 @@
             var min = -3;
             var max = 3;
 
+            var welcome = {
+
+            };
+            var consent = {
+                type: 'html-keyboard-response',
+                stimulus: 
+                    `
+                    <h3>Consent Form</h3>
+                    <p>Press any key to consent</p>
+                    `
+            };
+            var instructions = {
+                type: 'html-keyboard-response',
+                stimulus: 
+                    `
+                    
+                    `
+            }
+
             // Define the different trials and their variables
             
             /**
@@ -52,7 +72,7 @@
               Also be sure to include the file's extention in the name (as you can see with 'gameover.mp3')
               **NOTE: I noticed your files are .wav files so I tested this with some random .wav files and was having trouble getting it to recognize them as audio.
               **      Might be easiest/safest to convert your .wav files to .mp3
-              
+
             */
             var trialVars = {
                 1: {
@@ -113,7 +133,7 @@
             random_order = shuffle(order);
 
             // Add the trials in their random order to the jsPsych timeline
-            var timeline = [];
+            var timeline = [instructions];
             random_order.forEach((trialNum) => {
                 var trial = trialVars[trialNum];
                 timeline.push({
