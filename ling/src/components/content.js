@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import ConsentForm from './consent-form';
+import Experiment from './experiment';
 import { Redirect, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Content extends Component {
@@ -62,7 +63,12 @@ class Content extends Component {
                     
                     { /* EXPERIMENT */ }
                     <Route path="/experiment">
+                        <Experiment />
+                    </Route>
 
+
+                    <Route path="/">
+                        <Redirect to="/consent-form" />
                     </Route>
                 </Switch>
             </Router>

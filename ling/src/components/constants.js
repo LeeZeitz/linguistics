@@ -49,7 +49,7 @@ const trialVars = {
     },
 }
 
-const mediaUrl = 'https://raw.githubusercontent.com/LeeZeitz/linguistics/master/media/audio/';
+const mediaUrl = '/media/audio/';
 const consentForm = '/media/Informed Consent Form.docx';
 
 
