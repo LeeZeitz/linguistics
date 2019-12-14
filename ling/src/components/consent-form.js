@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 const radioStyle = {
   margin: '0px 40px'
@@ -25,6 +25,22 @@ class ConsentForm extends Component {
                   <Form.Check style={ radioStyle } inline label="Accept" type="radio" checked={ this.props.accept} id="radio-accept" onChange={ () => this.props.onRadioChange('accept') } />
               </div>
           </Form>
+        </div>
+        <div>
+            { 
+                this.props.decline && 
+                <p>
+                    You will not be able to participate in the experiment unless you accept the Informed Consent Form.    
+                </p>
+            }
+        </div>
+        <div style={ {'margin': '20px 0'} } >
+            <Button 
+                disabled={ !this.props.accept }
+                onClick={ this.props.onContinueClick }
+            >
+                Continue
+            </Button>
         </div>
       </div>
     );

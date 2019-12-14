@@ -60,6 +60,9 @@ const stimLabels = {
 const trialVars = [
     {
         'audio': 'gameover.mp3'
+    },
+    {
+        'audio': 'gameover.mp3'
     }
 ]
 

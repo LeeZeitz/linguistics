@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import ConsentForm from './consent-form';
 import Experiment from './experiment';
 import { Redirect, BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -38,23 +37,8 @@ class Content extends Component {
                             onRadioChange={ this.onRadioChange }
                             accept={ this.state.accept }
                             decline={ this.state.decline }
+                            onContinueClick={ () => this.setState({continue: true}) }
                         />
-                        <div>
-                            { 
-                                this.state.decline && 
-                                <p>
-                                    You will not be able to participate in the experiment unless you accept the Informed Consent Form.    
-                                </p>
-                            }
-                        </div>
-                        <div>
-                            <Button 
-                                disabled={ !this.state.accept }
-                                onClick={ () => this.setState({continue: true}) }
-                            >
-                                Continue
-                            </Button>
-                        </div>
                         {
                             this.state.continue === true &&
                             <Redirect to="/experiment" />
@@ -65,7 +49,6 @@ class Content extends Component {
                     <Route path="/experiment">
                         <Experiment />
                     </Route>
-
 
                     <Route path="/">
                         <Redirect to="/consent-form" />

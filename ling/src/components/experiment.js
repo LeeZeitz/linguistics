@@ -3,14 +3,28 @@ import jsPsych from 'jspsych';
 //import audio_slider_response from "jspsych/plugins/jspsych-audio-slider-response.js";
 import audio_slider_response from './custom-audio-slider-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
+import Footer from './footer';
+import { Button } from 'react-bootstrap';
 
 class Experiment extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        
+        let stimuliResults = {}
+        let sliderValues = {}
+        for (let j = 0; j < Object.keys(stimLabels).length; j++) {
+            sliderValues[j] = 0;
         }
+        for (let i = 0; i < trialVars.length; i++) {
+            stimuliResults[i] = sliderValues
+        }
+
         Object.assign(jsPsych.plugins, {'audio-slider-response': audio_slider_response})
         this.experimentDiv = null;
+
+        this.state = {
+            stimuliResults,
+        }
     }
 
     componentDidMount() {
@@ -73,13 +87,29 @@ class Experiment extends Component {
                 starts.push(parseInt((stimLabels[i].max + stimLabels[i].min) / 2))
             }
             timeline.push({
-                type: 'audio-slider-response',
-                stimulus: mediaUrl.concat(trial.audio),
-                labels: labels,
-                prompt: prompts,
-                min: mins,
-                max: maxes,
-                start: starts
+                timeline:[{
+                    type: 'audio-slider-response',
+                    stimulus: mediaUrl.concat(trial.audio),
+                    labels: labels,
+                    prompt: prompts,
+                    min: mins,
+                    max: maxes,
+                    start: starts,
+                    data: {stimulusId: trialNum}
+                }],
+                loop_function: (data) => {
+                    console.log(data.values()[0])
+                    let returnVal = data.values()[0].replayAudio;
+                    this.setState({
+                        replayAudio: false
+                    })
+                    let tempStimuliResults = Object.assign({}, this.state.stimuliResults);
+                    tempStimuliResults[data.values()[0].stimulusId] = data.values()[0].response
+                    this.setState({
+                        stimuliResults: tempStimuliResults
+                    });
+                    return returnVal
+                }
             });
         });
         return timeline;
@@ -95,8 +125,9 @@ class Experiment extends Component {
 
     render() {
         return (
-            <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }
-          />
+            <React.Fragment>
+                <div id="experiment" style={ {height: this.height, width: this.width, margin: '40px 0'} } ref={ e => {this.experimentDiv = e;} }/>
+            </React.Fragment>
         )
     }
 }
