@@ -16,7 +16,10 @@ class Experiment extends Component {
     componentDidMount() {
         jsPsych.init({
             timeline: this.createTimeline(),
-            display_element: this.experimentDiv
+            display_element: this.experimentDiv,
+            on_finish: function() {
+                jsPsych.data.displayData();
+            }
         })
     }
 

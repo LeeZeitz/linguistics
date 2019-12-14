@@ -169,7 +169,10 @@ var jsPsych = window.jsPsych || require('jspsych');
 				rt = Math.round((endTime - startTime) * 1000);
 			}
       response.rt = rt;
-      response.response = display_element.querySelector('#jspsych-audio-slider-response-response').value;
+      response.response = {};
+      for (var i = 0; i < trial.labels.length; i++) {
+        response.response[i] = display_element.querySelector('#jspsych-audio-slider-response-response-' + i).value
+      }
 
       if(trial.response_ends_trial){
         end_trial();
