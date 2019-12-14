@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
-import audio_slider_response from "jspsych/plugins/jspsych-audio-slider-response.js";
-import { trialVars, mediaUrl } from './constants';
+//import audio_slider_response from "jspsych/plugins/jspsych-audio-slider-response.js";
+import audio_slider_response from './custom-audio-slider-response';
+import { trialVars, stimLabels, mediaUrl } from './constants';
 
 class Experiment extends Component {
     constructor(props) {
@@ -46,20 +47,36 @@ class Experiment extends Component {
     createTimeline = () => {
         // Generate a random order for the trials
         let order = [];
-        for (let i = 1; i < Object.keys(trialVars).length + 1; i++) {
+        for (let i = 0; i < Object.keys(trialVars).length; i++) {
             order.push(i);
         };
         let random_order = this.shuffle(order);
 
         // Add the trials in their random order to the jsPsych timeline
         let timeline = [];//[instructions];
+
         random_order.forEach((trialNum) => {
-            var trial = trialVars[trialNum];
+            let trial = trialVars[trialNum];
+            let labels = [];
+            let prompts = [];
+            let mins = [];
+            let maxes = [];
+            let starts = [];
+            for (let i = 0; i < Object.keys(stimLabels).length; i++) {
+                labels.push([stimLabels[i].minVal, stimLabels[i].maxVal]);
+                prompts.push(stimLabels[i].prompt);
+                mins.push(stimLabels[i].min);
+                maxes.push(stimLabels[i].max);
+                starts.push(parseInt((stimLabels[i].max + stimLabels[i].min) / 2))
+            }
             timeline.push({
                 type: 'audio-slider-response',
                 stimulus: mediaUrl.concat(trial.audio),
-                labels: [trial.min, trial.max],
-                prompt: trial.prompt
+                labels: labels,
+                prompt: prompts,
+                min: mins,
+                max: maxes,
+                start: starts
             });
         });
         return timeline;
@@ -75,12 +92,7 @@ class Experiment extends Component {
 
     render() {
         return (
-            <div
-                id="experiment"
-                style={{ height: this.height, width: this.width }}
-                ref={e => {
-                    this.experimentDiv = e;
-                }}
+            <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }
           />
         )
     }
