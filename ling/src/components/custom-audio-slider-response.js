@@ -147,13 +147,6 @@ var jsPsych = window.jsPsych || require('jspsych');
     // add submit button
     html += '<button id="jspsych-audio-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
 
-    html += '<div>';
-    html += '<div style="display: block; padding: 20px; height: 150px; width: 100%;"/>';
-    html += '<div style="background-color: #DEDEDE; border-top: 1px solid #E7E7E7; text-align: center; padding: 20px; position: fixed; left: 0; bottom: 0; height: 150px; width: 100%">';
-    html += '<button id="jspsych-audio-slider-response-replay" class="btn btn-primary">Replay Audio</button>'
-    html += '</div>';
-    html += '</div>';
-
     display_element.innerHTML = html;
 
     var response = {
@@ -188,29 +181,6 @@ var jsPsych = window.jsPsych || require('jspsych');
       }
 
     });
-
-    display_element.querySelector('#jspsych-audio-slider-response-replay').addEventListener('click', function() {
-        // measure response time
-        var endTime = performance.now();
-              var rt = endTime - startTime;
-              if(context !== null){
-                  endTime = context.currentTime;
-                  rt = Math.round((endTime - startTime) * 1000);
-              }
-        response.rt = rt;
-        response.response = {};
-        for (var i = 0; i < trial.labels.length; i++) {
-          response.response[i] = display_element.querySelector('#jspsych-audio-slider-response-response-' + i).value
-        }
-        response.replayAudio = true;
-  
-        if(trial.response_ends_trial){
-          end_trial();
-        } else {
-          display_element.querySelector('#jspsych-audio-slider-response-next').disabled = true;
-        }
-  
-      });
 
     function end_trial(){
 

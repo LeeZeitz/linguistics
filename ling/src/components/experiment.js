@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
-//import audio_slider_response from "jspsych/plugins/jspsych-audio-slider-response.js";
 import audio_slider_response from './custom-audio-slider-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
 import Footer from './footer';
@@ -84,7 +83,7 @@ class Experiment extends Component {
                 prompts.push(stimLabels[i].prompt);
                 mins.push(stimLabels[i].min);
                 maxes.push(stimLabels[i].max);
-                starts.push(parseInt((stimLabels[i].max + stimLabels[i].min) / 2))
+                starts.push(this.state.stimuliResults[trialNum][i])
             }
             timeline.push({
                 timeline:[{
@@ -97,19 +96,7 @@ class Experiment extends Component {
                     start: starts,
                     data: {stimulusId: trialNum}
                 }],
-                loop_function: (data) => {
-                    console.log(data.values()[0])
-                    let returnVal = data.values()[0].replayAudio;
-                    this.setState({
-                        replayAudio: false
-                    })
-                    let tempStimuliResults = Object.assign({}, this.state.stimuliResults);
-                    tempStimuliResults[data.values()[0].stimulusId] = data.values()[0].response
-                    this.setState({
-                        stimuliResults: tempStimuliResults
-                    });
-                    return returnVal
-                }
+                on_start: () => this.setState({currentTrialId: trialNum})
             });
         });
         return timeline;
@@ -123,10 +110,22 @@ class Experiment extends Component {
         )
     }
 
+    onReplayAudio = () => {
+        let audio = new Audio(mediaUrl.concat(trialVars[this.state.currentTrialId].audio));
+        audio.play();
+    }
+
     render() {
         return (
             <React.Fragment>
                 <div id="experiment" style={ {height: this.height, width: this.width, margin: '40px 0'} } ref={ e => {this.experimentDiv = e;} }/>
+                <Footer>
+                    <Button
+                        onClick={ this.onReplayAudio }    
+                    >
+                        Replay Audio
+                    </Button>
+                </Footer>
             </React.Fragment>
         )
     }
