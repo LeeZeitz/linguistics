@@ -69,8 +69,4 @@ const trialVars = [
 const mediaUrl = '/media/audio/';
 const consentForm = '/media/Informed Consent Form.docx';
 
-const cid = '319297976473-jgsmmkrabdgfm12l0t17tn3dulod1th4.apps.googleusercontent.com';
-const cs = 'KvetMMZy_BnhTiBtzO5FfFiM';
-
-
-export { trialVars, stimLabels, mediaUrl, consentForm, cid, cs };
+export { trialVars, stimLabels, mediaUrl, consentForm };
