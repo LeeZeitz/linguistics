@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "axios": "^0.19.0",
     "jspsych": "^6.0.0",
+    "react-google-sheets": "^0.4.0",
     "react-pdf": "^4.1.0"
   }
 }

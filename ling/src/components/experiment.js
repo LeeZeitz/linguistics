@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
 import audio_slider_response from './custom-audio-slider-response';
+import ReactGoogleSheets from 'react-google-sheets';
 import { trialVars, stimLabels, mediaUrl } from './constants';
 import Footer from './footer';
 import { Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 class Experiment extends Component {
     constructor(props) {
@@ -23,6 +27,7 @@ class Experiment extends Component {
 
         this.state = {
             stimuliResults,
+            experimentComplete: false,
         }
     }
 
@@ -30,10 +35,17 @@ class Experiment extends Component {
         jsPsych.init({
             timeline: this.createTimeline(),
             display_element: this.experimentDiv,
-            on_finish: function() {
-                jsPsych.data.displayData();
-            }
+            on_finish: () => this.finishExperiment(jsPsych.data.get().values())
         })
+    }
+
+    finishExperiment = (rawResults) => {
+        let results = {}
+        for (let i = 0; i < rawResults.length; i++) {
+            results[i] = rawResults[i].response;
+        }
+        this.setState({experimentComplete: true});
+        axios.post('http://localhost:8080/', results);
     }
 
     /**
@@ -120,13 +132,19 @@ class Experiment extends Component {
         return (
             <React.Fragment>
                 <div id="experiment" style={ {height: this.height, width: this.width, margin: '40px 0'} } ref={ e => {this.experimentDiv = e;} }/>
-                <Footer>
-                    <Button
-                        onClick={ this.onReplayAudio }    
-                    >
-                        Replay Audio
-                    </Button>
-                </Footer>
+                {
+                    !this.state.experimentComplete
+                    ?
+                    <Footer>
+                        <Button
+                            onClick={ this.onReplayAudio }    
+                        >
+                            Replay Audio
+                        </Button>
+                    </Footer>
+                    :
+                    <Redirect to='thank-you' />
+               }
             </React.Fragment>
         )
     }
