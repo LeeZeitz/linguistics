@@ -1,56 +1,56 @@
 const stimLabels = {
     0: {
         'prompt': 'How friendly is the speaker?',
-        'minVal': 'less friendly',
+        'minVal': 'unfriendly',
         'maxVal': 'friendly',
         'min': -3,
         'max': 3
     },
     1: {
         'prompt': 'How sympathetic is the speaker?',
-        'minVal': 'less sympathetic',
+        'minVal': 'unsympathetic',
         'maxVal': 'sympathetic',
         'min': -3,
         'max': 3
     },
     2: {
         'prompt': 'How likeable is the speaker?',
-        'minVal': 'less likeable',
+        'minVal': 'unlikeable',
         'maxVal': 'likeable',
         'min': -3,
         'max': 3
     },
     3: {
         'prompt': 'How trustworthy is the speaker?',
-        'minVal': 'less trustworthy',
+        'minVal': 'untrustworthy',
         'maxVal': 'trustworthy',
         'min': -3,
         'max': 3
     },
     4: {
         'prompt': 'How ambitious is the speaker?',
-        'minVal': 'less ambitious',
+        'minVal': 'unambitious',
         'maxVal': 'ambitious',
         'min': -3,
         'max': 3
     },
     5: {
         'prompt': 'How intelligent is the speaker?',
-        'minVal': 'less intelligent',
+        'minVal': 'unintelligent',
         'maxVal': 'intelligent',
         'min': -3,
         'max': 3
     },
     6: {
         'prompt': 'How educated is the speaker?',
-        'minVal': 'less educated',
+        'minVal': 'uneducated',
         'maxVal': 'educated',
         'min': -3,
         'max': 3
     },
     7: {
         'prompt': 'How authoritative is the speaker?',
-        'minVal': 'less authoritative',
+        'minVal': 'unauthoritative',
         'maxVal': 'authoritative',
         'min': -3,
         'max': 3
@@ -59,10 +59,7 @@ const stimLabels = {
 
 const trialVars = [
     {
-        'audio': 'gameover.mp3'
-    },
-    {
-        'audio': 'gameover.mp3'
+        'audio': 'LowM_Crk1.mp3'
     }
 ]
 
