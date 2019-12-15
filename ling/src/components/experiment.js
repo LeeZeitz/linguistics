@@ -94,7 +94,8 @@ class Experiment extends Component {
                     min: mins,
                     max: maxes,
                     start: starts,
-                    data: {stimulusId: trialNum}
+                    data: {stimulusId: trialNum},
+                    button_label: 'Proceed'
                 }],
                 on_start: () => this.setState({currentTrialId: trialNum})
             });

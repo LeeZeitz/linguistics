@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ConsentForm from './consent-form';
 import Experiment from './experiment';
+import Instructions from './instructions';
 import { Redirect, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Content extends Component {
@@ -10,6 +11,8 @@ class Content extends Component {
         this.state={
             accept: false,
             decline: false,
+            start: false,
+            continue: false
         }
     }
 
@@ -41,10 +44,21 @@ class Content extends Component {
                         />
                         {
                             this.state.continue === true &&
-                            <Redirect to="/experiment" />
+                            <Redirect to="/instructions" />
                         }
                     </Route>
                     
+                    { /* INSTRUCTIONS */ }
+                    <Route path='/instructions'>
+                        <Instructions 
+                            onStartClick={ () => this.setState({start: true}) }
+                        />
+                        {
+                            this.state.start === true &&
+                            <Redirect to='/experiment' />
+                        }
+                    </Route>
+
                     { /* EXPERIMENT */ }
                     <Route path="/experiment">
                         <Experiment />
