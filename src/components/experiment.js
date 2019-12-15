@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
 import audio_slider_response from './custom-audio-slider-response';
-import ReactGoogleSheets from 'react-google-sheets';
 import { trialVars, stimLabels, mediaUrl } from './constants';
 import Footer from './footer';
 import { Button } from 'react-bootstrap';
