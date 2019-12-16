@@ -190,6 +190,57 @@ const trialVars = [
     {
         'audio': 'LowM_Crk1.mp3'
     },
+    {
+        'audio': 'LowM_Crk2.mp3'
+    },
+    {
+        'audio': 'LowM_Crk3.mp3'
+    },
+    {
+        'audio': 'LowM_Mod1.mp3'
+    },
+    {
+        'audio': 'LowM_Mod2.mp3'
+    },
+    {
+        'audio': 'LowM_Mod3.mp3'
+    },
+    {
+        'audio': 'LowM_Part1.mp3'
+    },
+    {
+        'audio': 'LowM_Part2.mp3'
+    },
+    {
+        'audio': 'LowM_Part3.mp3'
+    },
+    {
+        'audio': 'LowW_Crk1_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Crk2_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Crk3_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Mod1_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Mod2_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Mod4_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Part1_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Part2_Norm.mp3'
+    },
+    {
+        'audio': 'LowW_Part3_Norm.mp3'
+    }, 
 ]
 
 const mediaUrl = '/media/audio/';
