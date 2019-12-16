@@ -127,7 +127,7 @@ var jsPsych = window.jsPsych || require('jspsych');
     html += '">';
     for (var i = 0; i < trial.labels.length; i++) {
       
-        html += trial.prompt[i];
+        html += "<h6>" + trial.prompt[i] + "</h6>";
         html += '<div style="margin: 10px 0 35px 0;">';
         html += '<div>';
         html += '<input type="range" value="'+trial.start[i]+'" min="'+trial.min[i]+'" max="'+trial.max[i]+'" step="'+trial.step+'" style="width: 100%;" id="jspsych-audio-slider-response-response-' + i + '"></input>';
