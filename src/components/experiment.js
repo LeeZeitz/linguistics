@@ -130,8 +130,8 @@ class Experiment extends Component {
     render() {
         return (
             <React.Fragment>
-                <div id="experiment" style={ {height: this.height, width: this.width, margin: '40px 0'} } ref={ e => {this.experimentDiv = e;} }/>
-                {
+                <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }/>
+                {/*
                     !this.state.experimentComplete
                     ?
                     <Footer>
@@ -143,7 +143,7 @@ class Experiment extends Component {
                     </Footer>
                     :
                     <Redirect to='thank-you' />
-               }
+                */}
             </React.Fragment>
         )
     }
