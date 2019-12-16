@@ -166,6 +166,36 @@ const trialVars = [
     {
         'audio': 'HiM_Part6_Norm.mp3'
     },
+    {
+        'audio': 'HiW_Crk1_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Crk5_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Crk6_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Mod2_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Mod3_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Mod5_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Part1_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Part4_Norm.mp3'
+    },
+    {
+        'audio': 'HiW_Part5_Norm.mp3'
+    },
+    {
+        'audio': 'LowM_Crk1.mp3'
+    },
 ]
 
 const mediaUrl = '/media/audio/';
