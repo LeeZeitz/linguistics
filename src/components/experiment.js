@@ -130,7 +130,7 @@ class Experiment extends Component {
     render() {
         return (
             <React.Fragment>
-                <div id="experiment" style={ {height: this.height, width: this.width, margin: '40px 0'} } ref={ e => {this.experimentDiv = e;} }/>
+                <div id="experiment" style={ {height: this.height, width: this.width, margin: '190px 0px 40px 0px'} } ref={ e => {this.experimentDiv = e;} }/>
                 {
                     !this.state.experimentComplete
                     ?
