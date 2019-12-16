@@ -83,9 +83,6 @@ const trialVars = [
         'audio': 'Dist18_Norm.mp3'
     },
     {
-        'audio': 'Dist18_Norm.mp3'
-    },
-    {
         'audio': 'Dist19_Norm.mp3'
     },
     {
