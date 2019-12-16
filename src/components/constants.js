@@ -63,7 +63,82 @@ const trialVars = [
     },
     {
         'audio': 'Dist12_Norm.mp3'
-    }
+    },
+    {
+        'audio': 'Dist13_Norm.mp3'
+    },
+    {
+        'audio' : 'Dist14_Norm.mp3'
+    },
+    {
+        'audio' : 'Dist15_Norm.mp3'
+    },
+    {
+        'audio' : 'Dist16_Norm.mp3'
+    },
+    {
+        'audio': 'Dist17_Norm.mp3'
+    },
+    {
+        'audio': 'Dist18_Norm.mp3'
+    },
+    {
+        'audio': 'Dist18_Norm.mp3'
+    },
+    {
+        'audio': 'Dist19_Norm.mp3'
+    },
+    {
+        'audio': 'Dist20_Norm.mp3'
+    },
+    {
+        'audio': 'Dist21_Norm.mp3'
+    },
+    {
+        'audio': 'Dist22_Norm.mp3'
+    },
+    {
+        'audio': 'Dist23_Norm.mp3'
+    },
+    {
+        'audio': 'Dist24_Norm.mp3'
+    },
+    {
+        'audio': 'Dist25_Norm.mp3'
+    },
+    {
+        'audio': 'Dist26_Norm.mp3'
+    },
+    {
+        'audio': 'Dist27_Norm.mp3'
+    },
+    {
+        'audio': 'Dist28_Norm.mp3'
+    },
+    {
+        'audio': 'Dist29_Norm.mp3'
+    },
+    {
+        'audio': 'Dist30_Norm.mp3'
+    },
+    {
+        'audio': 'Dist31_Norm.mp3'
+    },
+    {
+        'audio': 'Dist32_Norm.mp3'
+    },
+    {
+        'audio': 'Dist33_Norm.mp3'
+    },
+    {
+        'audio': 'Dist34_Norm.mp3'
+    },
+    {
+        'audio': 'Dist35_Norm.mp3'
+    },
+    {
+        'audio': 'Dist36_Norm.mp3'
+    },
 ]
 
 const mediaUrl = '/media/audio/';
