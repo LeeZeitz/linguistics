@@ -62,7 +62,7 @@ const trialVars = [
         'audio': 'HiM_Crk_1_Norm.mp3'
     },
     {
-        'audio': 'HiM_Crk_2_Norm.mp3'
+        'audio': 'HiM_Crk_1_Norm.mp3'
     }
 ]
 
