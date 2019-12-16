@@ -59,10 +59,10 @@ const stimLabels = {
 
 const trialVars = [
     {
-        'audio': 'HiM_Crk1_Norm.mp3'
+        'audio': 'Dist11_Norm.mp3'
     },
     {
-        'audio': 'HiM_Crk1_Norm.mp3'
+        'audio': 'Dist12_Norm.mp3'
     }
 ]
 
