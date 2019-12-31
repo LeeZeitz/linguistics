@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
 import audio_slider_response from './custom-audio-slider-response';
+import html_button_response from 'jspsych/plugins/jspsych-html-button-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
 import Footer from './footer';
 import { Button } from 'react-bootstrap';
@@ -21,7 +22,7 @@ class Experiment extends Component {
             stimuliResults[i] = sliderValues
         }
 
-        Object.assign(jsPsych.plugins, {'audio-slider-response': audio_slider_response})
+        Object.assign(jsPsych.plugins, {'audio-slider-response': audio_slider_response, 'html-button-response': html_button_response})
         this.experimentDiv = null;
 
         this.state = {
@@ -79,25 +80,54 @@ class Experiment extends Component {
         };
         let random_order = this.shuffle(order);
 
+        let labels = [];
+        let prompts = [];
+        let mins = [];
+        let maxes = [];
+        for (let i = 0; i < Object.keys(stimLabels).length; i++) {
+            labels.push([stimLabels[i].minVal, stimLabels[i].maxVal]);
+            prompts.push(stimLabels[i].prompt);
+            mins.push(stimLabels[i].min);
+            maxes.push(stimLabels[i].max);
+        }
+
         // Add the trials in their random order to the jsPsych timeline
-        let timeline = [];//[instructions];
+        let timeline = [
+            {
+                type: 'audio-slider-response',
+                stimulus: mediaUrl.concat('testfile.mp3'),
+                labels: labels,
+                prompt: prompts,
+                min: mins,
+                max: maxes,
+                start: [0, 0, 0, 0, 0, 0, 0],
+                button_label: 'Proceed'
+            },
+            {
+                type: 'audio-slider-response',
+                stimulus: mediaUrl.concat('testfile2.mp3'),
+                labels: labels,
+                prompt: prompts,
+                min: mins,
+                max: maxes,
+                start: [0, 0, 0, 0, 0, 0, 0],
+                button_label: 'Proceed'
+            },
+            {
+                type: 'html-button-response',
+                stimulus: '<p>The expeiment will now start.</p>',
+                choices: ['Begin']
+            }
+        ];
 
         random_order.forEach((trialNum) => {
             let trial = trialVars[trialNum];
-            let labels = [];
-            let prompts = [];
-            let mins = [];
-            let maxes = [];
             let starts = [];
             for (let i = 0; i < Object.keys(stimLabels).length; i++) {
-                labels.push([stimLabels[i].minVal, stimLabels[i].maxVal]);
-                prompts.push(stimLabels[i].prompt);
-                mins.push(stimLabels[i].min);
-                maxes.push(stimLabels[i].max);
                 starts.push(this.state.stimuliResults[trialNum][i])
             }
             timeline.push({
-                timeline:[{
+                timeline: [{
                     type: 'audio-slider-response',
                     stimulus: mediaUrl.concat(trial.audio),
                     labels: labels,
