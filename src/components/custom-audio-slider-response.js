@@ -1,5 +1,6 @@
 /* global define */
 var jsPsych = window.jsPsych || require('jspsych');
+var sliders = new Array();
 
 (function (root, factory) {
   if(typeof define === "function" && define.amd) {
@@ -156,9 +157,16 @@ var jsPsych = window.jsPsych || require('jspsych');
     };
 
     if(trial.require_movement){
-      display_element.querySelector('#jspsych-audio-slider-response-response').addEventListener('change', function(){
-        display_element.querySelector('#jspsych-audio-slider-response-next').disabled = false;
-      })
+      for (var i = 0; i < trial.labels.length; i++) {
+        display_element.querySelector('#jspsych-audio-slider-response-response-' + i).addEventListener('click', function(i){
+          if (!sliders.includes(j)) {
+            sliders.push(j);
+          }
+          if (sliders.length === trial.labels.length) {
+            display_element.querySelector('#jspsych-audio-slider-response-next').disabled = false;
+          }
+        })
+      }
     }
     
     display_element.querySelector('#jspsych-audio-slider-response-next').addEventListener('click', function() {

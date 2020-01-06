@@ -136,9 +136,16 @@ class Experiment extends Component {
                     max: maxes,
                     start: starts,
                     data: {stimulusId: trialNum},
-                    button_label: 'Proceed'
+                    button_label: 'Proceed',
+                    require_movement: true
                 }],
-                on_start: () => this.setState({currentTrialId: trialNum})
+                on_start: () => {
+                    this.setState({currentTrialId: trialNum});
+                    let sleep = (milliseconds) => {
+                        return new Promise(resolve => setTimeout(resolve, milliseconds))
+                    }
+                    sleep(3000);
+                }
             });
         });
         return timeline;
