@@ -98,6 +98,8 @@ var sliders = new Array();
 
   plugin.trial = function(display_element, trial) {
 
+    sliders = new Array();
+
     // setup stimulus
     var context = jsPsych.pluginAPI.audioContext();
     if(context !== null){
@@ -158,9 +160,11 @@ var sliders = new Array();
 
     if(trial.require_movement){
       for (var i = 0; i < trial.labels.length; i++) {
-        display_element.querySelector('#jspsych-audio-slider-response-response-' + i).addEventListener('click', function(i){
-          if (!sliders.includes(j)) {
-            sliders.push(j);
+        display_element.querySelector('#jspsych-audio-slider-response-response-' + i).addEventListener('click', function(e){
+          var fullId = e.toElement.id.split('-');
+          var id = fullId[fullId.length - 1]
+          if (!sliders.includes(id)) {
+            sliders.push(id);
           }
           if (sliders.length === trial.labels.length) {
             display_element.querySelector('#jspsych-audio-slider-response-next').disabled = false;
