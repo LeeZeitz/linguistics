@@ -150,7 +150,7 @@ var sliders = [];
     
     // add submit button
     if (trial.exit !== undefined) {
-      html += '<button id="jspsych-audio-slider-response-exit" class="jspsych-btn" '+ '>Exit Experiment</button>';
+      html += '<button id="jspsych-audio-slider-response-exit" class="jspsych-btn" style="background-color: #b50426; color: white; margin-right: 10px;" >Exit Experiment</button>';
     }
     html += '<button id="jspsych-audio-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
 
