@@ -1,6 +1,6 @@
 /* global define */
 var jsPsych = window.jsPsych || require('jspsych');
-var sliders = new Array();
+var sliders = [];
 
 (function (root, factory) {
   if(typeof define === "function" && define.amd) {
@@ -98,7 +98,7 @@ var sliders = new Array();
 
   plugin.trial = function(display_element, trial) {
 
-    sliders = new Array();
+    sliders = [];
 
     // setup stimulus
     var context = jsPsych.pluginAPI.audioContext();
@@ -149,6 +149,9 @@ var sliders = new Array();
     html += '</div>';
     
     // add submit button
+    if (trial.exit !== undefined) {
+      html += '<button id="jspsych-audio-slider-response-exit" class="jspsych-btn" '+ '>Exit Experiment</button>';
+    }
     html += '<button id="jspsych-audio-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
 
     display_element.innerHTML = html;
@@ -159,7 +162,7 @@ var sliders = new Array();
     };
 
     if(trial.require_movement){
-      for (var i = 0; i < trial.labels.length; i++) {
+      for (i = 0; i < trial.labels.length; i++) {
         display_element.querySelector('#jspsych-audio-slider-response-response-' + i).addEventListener('click', function(e){
           var fullId = e.toElement.id.split('-');
           var id = fullId[fullId.length - 1]
@@ -194,6 +197,11 @@ var sliders = new Array();
       }
 
     });
+    if (trial.exit) {
+      display_element.querySelector('#jspsych-audio-slider-response-exit').addEventListener('click', function() {
+        trial.exit();
+      })
+    }
 
     function end_trial(){
 

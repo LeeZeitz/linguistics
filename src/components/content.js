@@ -70,6 +70,12 @@ class Content extends Component {
                         <ThankYou />
                     </Route>
 
+                    { /* EXIT */ }
+                    <Route path="/exit">
+                        <p>Thank you for participating.</p> 
+                        <p>Since you have quit the experiment your data will not be used.</p>
+                    </Route>
+
                     <Route path="/">
                         <Redirect to="/consent-form" />
                     </Route>

@@ -3,8 +3,6 @@ import jsPsych from 'jspsych';
 import audio_slider_response from './custom-audio-slider-response';
 import html_button_response from 'jspsych/plugins/jspsych-html-button-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
-import Footer from './footer';
-import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -137,7 +135,8 @@ class Experiment extends Component {
                     start: starts,
                     data: {stimulusId: trialNum},
                     button_label: 'Proceed',
-                    require_movement: true
+                    require_movement: true,
+                    exit: () => {this.setState({exit: true})}
                 }],
                 on_start: () => {
                     this.setState({currentTrialId: trialNum});
@@ -168,19 +167,9 @@ class Experiment extends Component {
         return (
             <React.Fragment>
                 <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }/>
-                {/*
-                    !this.state.experimentComplete
-                    ?
-                    <Footer>
-                        <Button
-                            onClick={ this.onReplayAudio }    
-                        >
-                            Replay Audio
-                        </Button>
-                    </Footer>
-                    :
-                    <Redirect to='thank-you' />
-                */}
+                {
+                    this.state.exit && <Redirect to="exit" />
+                }
             </React.Fragment>
         )
     }
