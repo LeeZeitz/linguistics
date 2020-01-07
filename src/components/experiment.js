@@ -33,6 +33,7 @@ class Experiment extends Component {
         jsPsych.init({
             timeline: this.createTimeline(),
             display_element: this.experimentDiv,
+            show_progress_bar: true,
             on_finish: () => this.finishExperiment(jsPsych.data.get().values())
         })
     }
@@ -137,14 +138,7 @@ class Experiment extends Component {
                     button_label: 'Proceed',
                     require_movement: true,
                     exit: () => {this.setState({exit: true})}
-                }],
-                on_start: () => {
-                    this.setState({currentTrialId: trialNum});
-                    let sleep = (milliseconds) => {
-                        return new Promise(resolve => setTimeout(resolve, milliseconds))
-                    }
-                    sleep(3000);
-                }
+                }]
             });
         });
         return timeline;
