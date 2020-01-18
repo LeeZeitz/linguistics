@@ -114,7 +114,7 @@ class Experiment extends Component {
             },
             {
                 type: 'html-button-response',
-                stimulus: '<p>The expeiment will now start.</p>',
+                stimulus: '<p>The experiment will now start.</p>',
                 choices: ['Begin']
             }
         ];
