@@ -61,7 +61,8 @@ const trialVars = [
     {
         'audio': 'Dist11_Norm.mp3'
     },
-    {
+]
+/*    {
         'audio': 'Dist12_Norm.mp3'
     },
     {
@@ -242,6 +243,7 @@ const trialVars = [
         'audio': 'LowW_Part3_Norm.mp3'
     }, 
 ]
+*/
 
 const mediaUrl = '/media/audio/';
 const consentForm = '/media/Informed Consent Form.docx';

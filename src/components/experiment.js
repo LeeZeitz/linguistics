@@ -4,8 +4,6 @@ import audio_slider_response from './custom-audio-slider-response';
 import html_button_response from 'jspsych/plugins/jspsych-html-button-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 class Experiment extends Component {
     constructor(props) {
@@ -41,10 +39,10 @@ class Experiment extends Component {
     finishExperiment = (rawResults) => {
         let results = {}
         for (let i = 0; i < rawResults.length; i++) {
-            results[i] = rawResults[i].response;
+            results[i] = {...rawResults[i].response, stimulus: rawResults[i].stimulus};
         }
         this.setState({experimentComplete: true});
-        axios.post('http://localhost:8080/', results);
+        this.props.onUpdateResults(results);
     }
 
     /**
@@ -134,10 +132,9 @@ class Experiment extends Component {
                     min: mins,
                     max: maxes,
                     start: starts,
-                    data: {stimulusId: trialNum},
+                    data: {stimulusId: trialNum, stimulusName: trial.audio},
                     button_label: 'Proceed',
-                    require_movement: true,
-                    exit: () => {this.setState({exit: true})}
+                    require_movement: true
                 }]
             });
         });
@@ -162,7 +159,7 @@ class Experiment extends Component {
             <React.Fragment>
                 <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }/>
                 {
-                    this.state.exit && <Redirect to="exit" />
+                    this.state.experimentComplete && <Redirect to="demographics" />
                 }
             </React.Fragment>
         )
