@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import jsPsych from 'jspsych';
 import audio_slider_response from './custom-audio-slider-response';
+import html_button_response from 'jspsych/plugins/jspsych-html-button-response';
 import { trialVars, stimLabels, mediaUrl } from './constants';
-import Footer from './footer';
-import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 class Experiment extends Component {
     constructor(props) {
@@ -21,7 +18,7 @@ class Experiment extends Component {
             stimuliResults[i] = sliderValues
         }
 
-        Object.assign(jsPsych.plugins, {'audio-slider-response': audio_slider_response})
+        Object.assign(jsPsych.plugins, {'audio-slider-response': audio_slider_response, 'html-button-response': html_button_response})
         this.experimentDiv = null;
 
         this.state = {
@@ -34,6 +31,7 @@ class Experiment extends Component {
         jsPsych.init({
             timeline: this.createTimeline(),
             display_element: this.experimentDiv,
+            show_progress_bar: true,
             on_finish: () => this.finishExperiment(jsPsych.data.get().values())
         })
     }
@@ -41,10 +39,10 @@ class Experiment extends Component {
     finishExperiment = (rawResults) => {
         let results = {}
         for (let i = 0; i < rawResults.length; i++) {
-            results[i] = rawResults[i].response;
+            results[i] = {...rawResults[i].response, stimulus: rawResults[i].stimulus};
         }
         this.setState({experimentComplete: true});
-        axios.post('http://localhost:8080/', results);
+        this.props.onUpdateResults(results);
     }
 
     /**
@@ -79,25 +77,54 @@ class Experiment extends Component {
         };
         let random_order = this.shuffle(order);
 
+        let labels = [];
+        let prompts = [];
+        let mins = [];
+        let maxes = [];
+        for (let i = 0; i < Object.keys(stimLabels).length; i++) {
+            labels.push([stimLabels[i].minVal, stimLabels[i].maxVal]);
+            prompts.push(stimLabels[i].prompt);
+            mins.push(stimLabels[i].min);
+            maxes.push(stimLabels[i].max);
+        }
+
         // Add the trials in their random order to the jsPsych timeline
-        let timeline = [];//[instructions];
+        let timeline = [
+            {
+                type: 'audio-slider-response',
+                stimulus: mediaUrl.concat('testfile.mp3'),
+                labels: labels,
+                prompt: prompts,
+                min: mins,
+                max: maxes,
+                start: [0, 0, 0, 0, 0, 0, 0],
+                button_label: 'Proceed'
+            },
+            {
+                type: 'audio-slider-response',
+                stimulus: mediaUrl.concat('testfile2.mp3'),
+                labels: labels,
+                prompt: prompts,
+                min: mins,
+                max: maxes,
+                start: [0, 0, 0, 0, 0, 0, 0],
+                button_label: 'Proceed'
+            },
+            {
+                type: 'html-button-response',
+                stimulus: '<p>The experiment will now start.</p>',
+                choices: ['Begin']
+            }
+        ];
 
         random_order.forEach((trialNum) => {
             let trial = trialVars[trialNum];
-            let labels = [];
-            let prompts = [];
-            let mins = [];
-            let maxes = [];
             let starts = [];
             for (let i = 0; i < Object.keys(stimLabels).length; i++) {
-                labels.push([stimLabels[i].minVal, stimLabels[i].maxVal]);
-                prompts.push(stimLabels[i].prompt);
-                mins.push(stimLabels[i].min);
-                maxes.push(stimLabels[i].max);
                 starts.push(this.state.stimuliResults[trialNum][i])
             }
             timeline.push({
-                timeline:[{
+                timeline: [{
                     type: 'audio-slider-response',
                     stimulus: mediaUrl.concat(trial.audio),
                     labels: labels,
@@ -105,10 +132,10 @@ class Experiment extends Component {
                     min: mins,
                     max: maxes,
                     start: starts,
-                    data: {stimulusId: trialNum},
-                    button_label: 'Proceed'
-                }],
-                on_start: () => this.setState({currentTrialId: trialNum})
+                    data: {stimulusId: trialNum, stimulusName: trial.audio},
+                    button_label: 'Proceed',
+                    require_movement: true
+                }]
             });
         });
         return timeline;
@@ -130,20 +157,10 @@ class Experiment extends Component {
     render() {
         return (
             <React.Fragment>
-                <div id="experiment" style={ {height: this.height, width: this.width, margin: '190px 0px 40px 0px'} } ref={ e => {this.experimentDiv = e;} }/>
+                <div id="experiment" style={ {height: this.height, width: this.width} } ref={ e => {this.experimentDiv = e;} }/>
                 {
-                    !this.state.experimentComplete
-                    ?
-                    <Footer>
-                        <Button
-                            onClick={ this.onReplayAudio }    
-                        >
-                            Replay Audio
-                        </Button>
-                    </Footer>
-                    :
-                    <Redirect to='thank-you' />
-               }
+                    this.state.experimentComplete && <Redirect to="demographics" />
+                }
             </React.Fragment>
         )
     }

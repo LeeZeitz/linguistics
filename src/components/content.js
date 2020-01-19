@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ConsentForm from './consent-form';
+import Demographics from './demographics';
 import Experiment from './experiment';
 import Instructions from './instructions';
 import ThankYou from './thank-you';
 import { Redirect, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import axios from 'axios';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 class Content extends Component {
 
@@ -13,8 +16,13 @@ class Content extends Component {
             accept: false,
             decline: false,
             start: false,
-            continue: false
+            continue: false,
+            results: null,
         }
+    }
+
+    onUpdateResults = (results) => {
+        this.setState({results: results})
     }
 
     onRadioChange = (key) => {
@@ -29,6 +37,16 @@ class Content extends Component {
             decline: !this.state.decline
           })
         }
+    }
+
+    onSubmit = (demographics) => {
+        axios.post('/.netlify/functions/results_create', {results: this.state.results, demographics: demographics})
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
@@ -62,12 +80,27 @@ class Content extends Component {
 
                     { /* EXPERIMENT */ }
                     <Route path="/experiment">
-                        <Experiment />
+                        <Experiment 
+                            onUpdateResults={ this.onUpdateResults }
+                        />
+                    </Route>
+
+                    { /* DEMOGRAPHICS */ }
+                    <Route path="/demographics">
+                        <Demographics 
+                            onSubmit={ this.onSubmit }
+                        />
                     </Route>
 
                     { /* THANK YOU */ }
                     <Route path="/thank-you">
                         <ThankYou />
+                    </Route>
+
+                    { /* EXIT */ }
+                    <Route path="/exit">
+                        <p>Thank you for participating.</p> 
+                        <p>Since you have quit the experiment your data will not be used.</p>
                     </Route>
 
                     <Route path="/">
